@@ -18,3 +18,9 @@ def create_flag():
 def get_flags():
     res = Implementation().get_flags()
     return jsonify({'Status': res[0], res[1]: res[2]}), res[0]
+
+
+@app.route('/api/v1/red_flags/<red_flag_id>', methods=['DELETE'])
+def delete_flag(red_flag_id):
+    res = Implementation().delete(red_flag_id)
+    return jsonify({'Status': res[0], res[1]: res[2]}), res[0]
