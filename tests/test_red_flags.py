@@ -43,3 +43,11 @@ def test_get_flags(client):
     post_json(client, '/api/v1/red_flags', dat['basic'])
     response = client.get('/api/v1/red_flags')
     assert len(json_of_response(response)['data']) == 4
+
+
+# Test can delete given flag
+def test_delete_flag(client):
+    post_json(client, '/api/v1/red_flags', dat['basic'])
+    response = client.delete('/api/v1/red_flags/1')
+    assert json_of_response(response)['data'][0]['message'] ==\
+        'red-flag record has been deleted'
