@@ -22,3 +22,18 @@ class Implementation:
         else:
             res = [200, 'data', [red_flags[key] for key in red_flags.keys()]]
         return res
+
+    def edit(self, red_flag_id, data, field):
+        try:
+            red_flag = red_flags[str(red_flag_id)]
+            if red_flag['status'] in ['rejected', 'resolved']:
+                result = [
+                    403, 'error', f'red flag already {red_flag["status"]}'
+                    ]
+            else:
+                red_flag[field] = data[field]
+                result = [200, 'data', [{'id': red_flag_id, 'message':
+                          f'{field} updated to \'{data[field]}\''}]]
+        except Exception:
+            result = self.get_flag(red_flag_id)
+        return result
