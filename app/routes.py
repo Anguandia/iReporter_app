@@ -18,3 +18,10 @@ def create_flag():
 def get_flags():
     res = Implementation().get_flags()
     return jsonify({'Status': res[0], res[1]: res[2]}), res[0]
+
+
+@app.route('/api/v1/red_flags/<red_flag_id>/<key>', methods=['PATCH'])
+def edit(red_flag_id, key):
+    data = request.json
+    res = Implementation().edit(red_flag_id, data, key)
+    return jsonify({'Status': res[0], res[1]: res[2]}), res[0]
