@@ -25,7 +25,12 @@ def post_json(client, url, json_dict):
 
 # Decode json requests
 def json_of_response(response):
-    return json.loads(response.data.decode())
+    return json.loads(response.data.decode('utf-8'))
+
+
+# Encoding for put request
+def patch_json(client, url, json_dict):
+    return client.patch(url, data=json.dumps(json_dict), content_type='application/json')
 
 
 # Test red_flag creation and expected reponse; code and content
@@ -43,3 +48,12 @@ def test_get_flags(client):
     post_json(client, '/api/v1/red_flags', dat['basic'])
     response = client.get('/api/v1/red_flags')
     assert len(json_of_response(response)['data']) == 4
+
+
+# Test can edit location and comment
+def test_can_edit_comment(client):
+    post_json(client, '/api/v1/red_flags', dat['basic'])
+    response = patch_json(client, '/api/v1/red_flags/1/comment', {
+        'comment': 'teacher\'s salaries eaten'})
+    assert json_of_response(response)['data'][0]['message'] ==\
+        'comment updated to \'teacher\'s salaries eaten\''
