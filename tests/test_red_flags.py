@@ -6,6 +6,8 @@ from app import implementation, routes
 
 @pytest.fixture(scope='function')
 def client():
+    red_flags = implementation.red_flags
+    red_flags.clear()
     app = routes.app
     test_client = app.test_client()
     cxt = app.app_context()
@@ -32,3 +34,12 @@ def test_red_flag_creation(client):
     assert response.status_code == 201
     assert json_of_response(response)['data'][0]['message'] ==\
         'Created red flag'
+
+
+def test_get_flags(client):
+    post_json(client, '/api/v1/red_flags', dat['basic'])
+    post_json(client, '/api/v1/red_flags', dat['basic'])
+    post_json(client, '/api/v1/red_flags', dat['basic'])
+    post_json(client, '/api/v1/red_flags', dat['basic'])
+    response = client.get('/api/v1/red_flags')
+    assert len(json_of_response(response)['data']) == 4
