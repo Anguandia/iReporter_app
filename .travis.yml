@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.7-dev"
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  - python -m pytest --cov
+after success:
+  - "sbt coveralls"
+notifications:
+  email:
+    recipients:
+      - mikeanguandia@yahoo.com
