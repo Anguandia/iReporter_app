@@ -22,3 +22,11 @@ class Implementation:
         else:
             res = [200, 'data', [red_flags[key] for key in red_flags.keys()]]
         return res
+
+    def delete(self, red_flag_id):
+        try:
+            red_flags.pop(str(red_flag_id))
+            res = [200, 'data', [{'id': red_flag_id, 'message': 'red-flag record has been deleted'}]]
+        except Exception:
+            res = [404, 'error', 'red flag not found']
+        return res
