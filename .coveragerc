@@ -8,5 +8,4 @@ omit =
     */home/travis/virtualenv/*
     */usr/lib/python3/*
     */__init__.py
-    tests/*
     */models.py
