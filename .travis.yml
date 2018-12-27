@@ -4,6 +4,8 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+env:
+  - FLASK_ENV="PRODUCTION"
 # command to run tests
 script:
   - python -m pytest --cov
