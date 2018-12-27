@@ -10,7 +10,7 @@ env:
 script:
   - python -m pytest --cov
 after success:
-  - "sbt coveralls"
+  - coveralls
 notifications:
   email:
     recipients:
