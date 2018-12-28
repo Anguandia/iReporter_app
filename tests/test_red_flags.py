@@ -43,3 +43,13 @@ def test_get_flags(client):
     post_json(client, '/api/v1/red_flags', dat['basic'])
     response = client.get('/api/v1/red_flags')
     assert len(json_of_response(response)['data']) == 4
+
+
+# Test can fetch particular flag by id; correct response code and body
+def test_get_single_flag_by_id(client):
+    flag = post_json(client, '/api/v1/red_flags', {
+        'location': 'there', 'createdBy': 10, 'comment': 'gavi money'
+        })
+    assert json_of_response(flag)['Status'] == 201
+    resp = client.get('/api/v1/red_flags/1')
+    assert json_of_response(resp)['data'][0]['comment'] == 'gavi money'
